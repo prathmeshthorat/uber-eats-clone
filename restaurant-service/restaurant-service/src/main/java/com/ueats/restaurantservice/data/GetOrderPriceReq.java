@@ -1,4 +1,6 @@
-package com.ueats.orderservice.data;
+package com.ueats.restaurantservice.data;
+
+import java.util.Map;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,13 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contents {
-	
-	private long correlationid;
+public class GetOrderPriceReq {
 	
 	private long restaurantId;
 	
-	private long menuId;
-	
-	private String instructions;
+	private Map<Long, Integer> itemQuantity;
 }
