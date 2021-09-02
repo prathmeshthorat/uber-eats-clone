@@ -19,21 +19,22 @@ import lombok.NoArgsConstructor;
 public class OrderPayment {
 	
 	@Id
+	@Column(name = "correlation_id")
 	private long correlationId; 
 	
-	@Column
+	@Column(name = "is_paid")
 	private boolean isPaid;
 	
-	@Column
+	@Column(name = "payment_method")
 	private String paymentMethod;
 	
-	@Column
+	@Column(name = "create_time")
 	private Timestamp createTime;
 	
-	@Column
+	@Column(name = "paid_time")
 	private Timestamp paidTime;
 	
-	@Column
+	@Column(name = "amount")
 	private Double amount;
 
 }

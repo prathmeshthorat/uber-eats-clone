@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,29 +25,30 @@ import lombok.NoArgsConstructor;
 @Table(name = "user")
 public class UserEntity {
 	
-	@Column
+	@Column(name = "email")
 	private String email;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name ="user_id")
 	private long userId;
 	
-	@Column
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column
+	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column
+	@Column(name = "mobile_no")
 	private long mobileNo;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "userId")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id")
 	private List<Address> addressList;
 	
-	@Column
+	@Column(name = "joining_date")
 	private Timestamp joiningDate;
 	
-	@Column
+	@Column(name = "member_type")
 	private String memberType;
 }

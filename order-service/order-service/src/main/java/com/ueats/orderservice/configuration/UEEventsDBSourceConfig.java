@@ -29,7 +29,7 @@ public class UEEventsDBSourceConfig {
 	@Bean(name = "dataSource")
 	@ConfigurationProperties(prefix = "spring.events.datasource")
 	public DataSource dataSource() {
-		return DataSourceBuilder.create().build();
+		return DataSourceBuilder.create().url("jdbc:mysql://localhost:3306/uber_eats_events").build();
 	}
 
 	@Primary
@@ -39,7 +39,7 @@ public class UEEventsDBSourceConfig {
 
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.hbm2ddl.auto", "none");
-		properties.put("hibernate.dialec", "org.hibernate.dialect.MySQL5Dialect");
+		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
 		return builder.dataSource(eventsDataSource).packages("com.ueats.orderservice.events.entity").properties(properties)
 				.persistenceUnit("Events").build();

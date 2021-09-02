@@ -20,30 +20,31 @@ public class Address {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "address_id")
 	private long addressId;
 		
-	@Column
+	@Column(name = "first_line")
 	private String firstLine;
 	
-	@Column
+	@Column(name = "second_line")
 	private String secondLine;
 	
-	@Column
+	@Column(name = "city")
 	private String city;
 	
-	@Column
+	@Column(name = "state")
 	private String state;
 	
-	@Column
+	@Column(name = "country")
 	private String country;
 	
-	@Column
+	@Column(name = "zipcode")
 	private int zipcode;
 	
-	@Column
+	@Column(name = "address_type")
 	private String addressType;
 	
-	@Column
+	@Column(name = "is_primary")
 	private boolean isPrimary;
 	
 }

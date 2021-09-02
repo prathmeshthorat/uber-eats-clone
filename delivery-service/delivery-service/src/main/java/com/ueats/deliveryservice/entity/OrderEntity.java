@@ -22,24 +22,25 @@ public class OrderEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "correlation_id")
 	private long correlationId;
 	
-	@Column
+	@Column(name = "user_id")
 	private long userId;
 	
-	@Column
+	@Column(name = "address_id")
 	private long addressId;
 	
-	@Column
+	@Column(name = "order_time")
 	private Timestamp orderTime;	
 
-	@Column
+	@Column(name = "restaurant_id")
 	private long restaurantId;
 	
-	@Column
+	@Column(name = "status")
 	private String status;
 	
-	@Column
+	@Column(name = "is_paid")
 	private boolean isPaid;
 
 }

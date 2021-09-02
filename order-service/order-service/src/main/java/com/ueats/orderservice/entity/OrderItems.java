@@ -26,15 +26,16 @@ public class OrderItems implements Serializable {
 	private static final long serialVersionUID = -360785715173374253L;
 
 	
-	@Column
+	@Column(name = "restaurant_id")
 	private long restaurantId;
 	
 	@Id
+	@Column(name = "menu_id")
 	private long menuId;
 	
-	@Column
+	@Column(name = "instructions")
 	private String instructions;
 	
-	@Column
+	@Column(name = "quantity")
 	private int quantity;
 }

@@ -18,23 +18,24 @@ import lombok.NoArgsConstructor;
 @Table(name = "menu_items")
 public class MenuItems {
 
-	@Column
+	@Column(name = "dish_name")
 	private String dishName;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "menu_id")
 	private long menuId;
 
-	@Column
+	@Column(name = "dish_type")
 	private String dishType;
 
-	@Column
+	@Column(name = "is_available")
 	private boolean isAvailable;
 
-	@Column
+	@Column(name = "price")
 	private double price;
 
-	@Column
+	@Column(name = "discount")
 	private double discount;
 
 }

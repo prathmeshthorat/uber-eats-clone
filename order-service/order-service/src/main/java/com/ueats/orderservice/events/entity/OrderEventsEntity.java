@@ -19,30 +19,31 @@ import lombok.NoArgsConstructor;
 public class OrderEventsEntity {
 	
 	@Id
+	@Column(name = "correlation_id")
 	private long correlationId;
 	
-	@Column
+	@Column(name = "address_id")
 	private long addressId;
 	
-	@Column
+	@Column(name = "status")
 	private String status;
 	
-	@Column
+	@Column(name = "is_paid")
 	private boolean isPaid;
 	
-	@Column
+	@Column(name = "order_time")
 	private Timestamp orderTime;
 	
-	@Column
+	@Column(name = "delivery_time")
 	private Timestamp deliveryTime;
 	
-	@Column
+	@Column(name = "restaurant_id")
 	private long restaurantId;
 	
-	@Column
+	@Column(name = "user_id")
 	private long userId;
 	
-	@Column
+	@Column(name = "owner_app")
 	private String ownerApp;
 	
 }

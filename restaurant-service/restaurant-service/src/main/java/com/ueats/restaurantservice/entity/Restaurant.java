@@ -24,33 +24,34 @@ import lombok.NoArgsConstructor;
 @Table(name = "restaurant")
 public class Restaurant {
 
-	@Column
+	@Column(name = "name")
 	private String name;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "restaurant_id")
 	private long restaurantId;
 
-	@Column
+	@Column(name = "address")
 	private String address;
 
-	@Column
+	@Column(name = "service_start_time")
 	private Time serviceStartTime;
 
-	@Column
+	@Column(name = "service_end_time")
 	private Time serviceEndTime;
 
-	@Column
+	@Column(name = "is_serving")
 	private boolean isServing;
 
-	@Column
+	@Column(name = "waiting_period")
 	// Current wait time in minutes
 	private int waitingPeriod;
 
-	@Column
+	@Column(name = "food_type")
 	private String foodType;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "restaurantId")
+	@JoinColumn(name = "restaurant_id")
 	private List<MenuItems> menuList;
 }
