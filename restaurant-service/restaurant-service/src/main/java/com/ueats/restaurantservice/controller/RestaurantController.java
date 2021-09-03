@@ -3,6 +3,7 @@ package com.ueats.restaurantservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +17,11 @@ import com.ueats.restaurantservice.data.GetOrderPriceReq;
 import com.ueats.restaurantservice.entity.Restaurant;
 import com.ueats.restaurantservice.service.RestaurantService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/")
+@Slf4j
 public class RestaurantController {
 	
 	@Autowired
@@ -48,12 +52,12 @@ public class RestaurantController {
 		return rstService.getRestaurant(id);
 	}
 	
-	
+	@PostMapping("/calculateorderprice")
 	public ResponseEntity<Double> calculateOrderPrice(@RequestBody GetOrderPriceReq orderPriceReq){
+		log.info(orderPriceReq.toString());
+		double price = rstService.calculateOrderPrice(orderPriceReq);
 		
-		
-		
-		return null;	
+		return new ResponseEntity<Double>(price, HttpStatus.OK);	
 	}
 	
 	

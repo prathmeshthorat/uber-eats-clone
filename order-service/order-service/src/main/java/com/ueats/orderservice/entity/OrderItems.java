@@ -20,11 +20,11 @@ import lombok.NoArgsConstructor;
 @IdClass(OrderItems.class)
 public class OrderItems implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -360785715173374253L;
-
+	
+	@Id
+	@Column(name = "correlation_id")
+	private long correlationId;
 	
 	@Column(name = "restaurant_id")
 	private long restaurantId;

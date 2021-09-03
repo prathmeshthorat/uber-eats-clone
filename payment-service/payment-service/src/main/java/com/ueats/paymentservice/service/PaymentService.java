@@ -11,14 +11,19 @@ import org.springframework.stereotype.Service;
 import com.ueats.paymentservice.entity.OrderPayment;
 import com.ueats.paymentservice.repository.OrderPaymentRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class PaymentService {
 	
 	@Autowired
 	OrderPaymentRepository orderPayRepo;
 
 	public OrderPayment create(OrderPayment payment) {
+		
 		payment.setCreateTime(Timestamp.from(Instant.now()));
+		log.info(" PaymentService Create Order Payment request: "+ payment.toString());
 		return orderPayRepo.save(payment);
 	}
 	

@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ueats.paymentservice.entity.OrderPayment;
 import com.ueats.paymentservice.service.PaymentService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/")
+@Slf4j
 public class PaymentController {
 
 	@Autowired
@@ -20,7 +23,7 @@ public class PaymentController {
 
 	@PostMapping("/create")
 	public OrderPayment createPayRecord(@RequestBody OrderPayment payment) {
-
+		log.info("Create Order Payment request: "+ payment.toString());
 		return payService.create(payment);
 	}
 
