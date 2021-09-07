@@ -1,4 +1,4 @@
-package com.ueats.orderservice.configuration;
+package com.ueats.paymentservice.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,34 +21,36 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = {
-		"com.ueats.paymentservice.events.repository" }, transactionManagerRef = "transactionManager")
-public class UEEventsDBSourceConfig {
+@EnableJpaRepositories(basePackages = {
+		"com.ueats.paymentservice.repository" }, transactionManagerRef = "transactionManager", entityManagerFactoryRef = "entityManagerFactory")
+public class UEPaymentDBSourceConfig {
 
-	@Primary
 	@Bean(name = "dataSource")
-	@ConfigurationProperties(prefix = "spring.events.datasource")
+	@Primary
+	@ConfigurationProperties(prefix = "spring.payment.datasource")
 	public DataSource dataSource() {
-		return DataSourceBuilder.create().url("jdbc:mysql://localhost:3306/uber_eats_events").build();
+		return DataSourceBuilder.create().url("jdbc:mysql://localhost:3306/uber_eats_payment").build();
 	}
 
 	@Primary
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(EntityManagerFactoryBuilder builder,
-			@Qualifier("dataSource") DataSource eventsDataSource) {
+			@Qualifier("dataSource") DataSource dataSource) {
 
 		Map<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.hbm2ddl.auto", "none");
 		properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
-		return builder.dataSource(eventsDataSource).packages("com.ueats.paymentservice.events.entity").properties(properties)
-				.persistenceUnit("Events").build();
+		return builder.dataSource(dataSource).packages("com.ueats.paymentservice.entity").properties(properties).persistenceUnit("payment")
+				.build();
 	}
-
+	
 	@Primary
 	@Bean(name = "transactionManager")
 	public PlatformTransactionManager transactionManager(
 			@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
+
 	}
+
 }

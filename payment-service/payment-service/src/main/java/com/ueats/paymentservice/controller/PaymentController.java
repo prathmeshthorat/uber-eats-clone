@@ -37,9 +37,5 @@ public class PaymentController {
 		return payService.get(id);
 	}
 	
-	public double calculateOrderPrice() {
-		//TO DO: implementation
-		return 0;		
-	}
 
 }

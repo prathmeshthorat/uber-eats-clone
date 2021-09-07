@@ -2,10 +2,18 @@ server:
   port: 8085
   servlet:    context-path: /pay
 spring:  application:    name: payment-service
-    datasource:    url: jdbc:mysql://localhost:3306/uber_eats_payment
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: root
+    payment:
+    datasource:      url: jdbc:mysql://localhost:3306/uber_eats_payment
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: root
+  events:
+    datasource:
+      url: jdbc:mysql://localhost:3306/uber_eats_events
+      driver-class-name: com.mysql.jdbc.Driver
+      username: root
+      password: root
   jpa:    database: MYSQL    hibernate:      ddl-auto: none
       
     show-sql: true
+   
