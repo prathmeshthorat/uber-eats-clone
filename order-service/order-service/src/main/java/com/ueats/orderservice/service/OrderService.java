@@ -52,8 +52,8 @@ public class OrderService {
 		for(OrderItems i: itemList) {
 			i.setCorrelationId(newOrder.getCorrelationId());
 		}
-		itemRepo.saveAll(itemList);
-		
+		List<OrderItems> persistedItems = itemRepo.saveAll(itemList);
+		newOrder.setItemsList(persistedItems);
 		OrderEventsEntity eventEntity = new OrderEventsEntity();
 		eventEntity.setCorrelationId(newOrder.getCorrelationId());
 		eventEntity.setAddressId(newOrder.getAddressId());

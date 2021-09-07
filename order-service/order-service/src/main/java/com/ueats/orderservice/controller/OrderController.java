@@ -57,19 +57,22 @@ public class OrderController {
 		OrderEntity newOrder = new OrderEntity();
 		
 		try {
+			List<OrderItems> itemsList = order.getItemsList();
 			newOrder = orderService.createOrder(order);
 			GetOrderPriceReq orderPriceReq = new GetOrderPriceReq();
 			Map<Long, Integer> contents = new HashMap<Long, Integer>();
-			List<OrderItems> itemsList = order.getItemsList();
+			
 			for (OrderItems i : itemsList) {
 				contents.put(i.getMenuId(), i.getQuantity());
 			}
 			orderPriceReq.setItemQuantity(contents);
 			orderPriceReq.setRestaurantId(order.getRestaurantId());
-
+			
 			ResponseEntity<Double> orderPrice = restTemplate
 					.postForEntity("http://localhost:8087/restaurant/calculateorderprice", orderPriceReq, Double.class);
+			
 			log.info("Order Price: "+orderPrice.toString());
+			
 			AddPaymentRecordRequest paymentRecordRequest = new AddPaymentRecordRequest();
 			paymentRecordRequest.setCorrelationId(newOrder.getCorrelationId());
 			paymentRecordRequest.setPaid(false);
@@ -80,6 +83,7 @@ public class OrderController {
 			
 			restTemplate.postForObject("http://localhost:8085/pay/create", 
 					paymentRecordRequest, AddPaymentRecordRequest.class);
+			
 		} catch (RestClientException e) {
 			log.error(e.getMessage());
 			e.printStackTrace();

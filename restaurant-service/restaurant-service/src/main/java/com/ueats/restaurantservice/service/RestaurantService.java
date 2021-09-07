@@ -1,13 +1,11 @@
 package com.ueats.restaurantservice.service;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.management.RuntimeErrorException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,27 +56,26 @@ public class RestaurantService {
 
 	public double calculateOrderPrice(GetOrderPriceReq orderPriceReq) {
 		double sum = 0;
+		log.info(orderPriceReq.toString());
 		try {
 			Map<Long, Integer> orderMap = orderPriceReq.getItemQuantity();
 			SortedMap<Long, Integer> sortedMap = new TreeMap<Long, Integer>(orderMap);
-			List<Object> menuIds = Arrays.asList(sortedMap.keySet().toArray());
-			
-			log.info("Fetching prices for: "+menuIds);
-			
+			List<Long> menuIds = new ArrayList<Long>(sortedMap.keySet());
+			log.info("Fetching prices for: " + menuIds);
+
 			List<Double> priceList = rstRepo.getPriceList(menuIds);
-			
-			log.info("Fetched prices : "+priceList.toString());
-			Iterator<Long> it = sortedMap.keySet().iterator();
-			//To:Do price calculation
-			for(int i=0; i<priceList.size()-1; i++) {
-				log.info("Fetched prices :"+ it.next());
-				sum += priceList.get(i) * orderMap.get(it.next());
+			log.info("Discounted prices : " + priceList);
+			for(int n=0; n<priceList.size(); n++) {
+				sum += sortedMap.get(menuIds.get(n)) * priceList.get(n);
 			}
+			
+			log.info("Order price : " + sum);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
-		log.info("Calculated price for Order: "+sum);
+		log.info("Calculated price for Order: " + sum);
 		return sum;
 	}
 

@@ -1,6 +1,8 @@
 package com.ueats.restaurantservice.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,42 +25,61 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/")
 @Slf4j
 public class RestaurantController {
-	
+
 	@Autowired
 	RestaurantService rstService;
-	
+
 	@GetMapping("/all")
-	public List<Restaurant> getRestaurantList(){
+	public List<Restaurant> getRestaurantList() {
 		return rstService.getAll();
 	}
-	
+
 	@PostMapping("/add")
 	public Restaurant addRestaurant(@RequestBody Restaurant restaurant) {
 		return rstService.createRestaurant(restaurant);
 	}
-	
+
 	@PostMapping("/addmenu")
 	public Restaurant addMenuToRestaurant(@RequestBody Restaurant restaurant) {
 		return rstService.addMenu(restaurant);
 	}
-	
+
 	@PutMapping("/removeMenu/{menuId}/{available}")
-	public boolean removeMenu(@PathVariable("menuId") long menuId, @PathVariable("available") int available ) {
+	public boolean removeMenu(@PathVariable("menuId") long menuId, @PathVariable("available") int available) {
 		return rstService.removeMenu(menuId, available);
 	}
-	
+
 	@GetMapping("/getrestaurant/{id}")
 	public Restaurant getRestaurant(@PathVariable("id") long id) {
 		return rstService.getRestaurant(id);
 	}
-	
+
 	@PostMapping("/calculateorderprice")
-	public ResponseEntity<Double> calculateOrderPrice(@RequestBody GetOrderPriceReq orderPriceReq){
+	public ResponseEntity<Double> calculateOrderPrice(@RequestBody GetOrderPriceReq orderPriceReq) {
 		log.info(orderPriceReq.toString());
 		double price = rstService.calculateOrderPrice(orderPriceReq);
-		
-		return new ResponseEntity<Double>(price, HttpStatus.OK);	
+
+		return new ResponseEntity<Double>(price, HttpStatus.OK);
 	}
-	
-	
+
+	@PostMapping("/calculate")
+	public ResponseEntity<Double> calculateOrderPriceTest() {
+		double price = 0;
+		try {
+
+			GetOrderPriceReq orderPriceReq = new GetOrderPriceReq();
+			Map<Long, Integer> contents = new HashMap<Long, Integer>();
+			contents.put(8L, 2);
+			contents.put(9L, 2);
+			orderPriceReq.setItemQuantity(contents);
+			orderPriceReq.setRestaurantId(7);
+			log.info(orderPriceReq.toString());
+			price = rstService.calculateOrderPrice(orderPriceReq);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<Double>(price, HttpStatus.OK);
+	}
+
 }
